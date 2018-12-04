@@ -2,7 +2,7 @@ import { BaseModel, schemaOptions } from './../../shared/base.model';
 import { prop, ModelType } from 'typegoose';
 import { AccountRole } from './account-role.enum';
 
-export class Account extends BaseModel {
+export class Account extends BaseModel<Account> {
     @prop({
         required: [true, 'Username is required'],
         minlength: [6, 'Must be at least 6 characters'],
@@ -16,7 +16,7 @@ export class Account extends BaseModel {
     })
     password: string;
 
-    @prop({ enum: AccountRole, default: 'User' })
+    @prop({ enum: AccountRole, default: AccountRole.User })
     role?: AccountRole;
 
     @prop()
