@@ -1,23 +1,31 @@
-import { Document, SchemaOptions } from 'mongoose'
-import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
+import { SchemaOptions } from 'mongoose';
+import { ApiModelPropertyOptional } from '@nestjs/swagger';
+import { Typegoose, prop } from 'typegoose';
 
-export interface BaseModel extends Document {
-    createdAt?: Date
-    updatedAt?: Date
+export class BaseModel extends Typegoose {
+    @prop({ default: Date.now() })
+    createdAt?: Date;
+
+    @prop({ default: Date.now() })
+    updatedAt?: Date;
+
+    id?: string;
 }
 
 export class BaseDto {
     @ApiModelPropertyOptional({ type: String, format: 'date-time' })
-    createdAt?: Date
+    createdAt?: Date;
+
     @ApiModelPropertyOptional({ type: String, format: 'date-time' })
-    updatedAt?: Date
+    updatedAt?: Date;
+
     @ApiModelPropertyOptional()
-    id?: string
+    id?: string;
 }
 
 export const schemaOptions: SchemaOptions = {
     toJSON: {
         virtuals: true,
-        getters: true
-    }
-}
+        getters: true,
+    },
+};
